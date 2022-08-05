@@ -9,6 +9,7 @@ import MapModal from "../modals/MapModal";
 import MapScreen from "../screens/MapScreen";
 import ChatScreen from "../screens/ChatScreen";
 import ProfileStack from "./ProfileStack";
+import EventStack from "./EventStack";
 const Stack = createStackNavigator();
 
 export default function MapStack(navigation) {
@@ -20,13 +21,12 @@ export default function MapStack(navigation) {
                     component={MapScreen}
                     options={{ headerShown: false }}
                 />
-
-                {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
-                {/* <Stack.Screen name="ProfileStack" component={ProfileStack} options={{ headerShown: false }} /> */}
             </Stack.Group>
             <Stack.Group>
                  <Stack.Screen name="ProfileStack" component={ProfileStack} options={{ headerShown: false }} />
-                 {/* <Stack.Screen name="Organization" component={OrganizationModal} /> */}
+            </Stack.Group>
+            <Stack.Group>
+                 <Stack.Screen name="EventStack" component={EventStack} options={{ headerShown: false }} />
             </Stack.Group>
         </Stack.Navigator>
     );

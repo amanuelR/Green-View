@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     marginTop: 55,
     fontSize: 12,
-    marginLeft: -200,
+    marginLeft: 'auto',
   },
   featuredCommunityJoinText: {
     textAlign: "center",

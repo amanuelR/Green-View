@@ -458,9 +458,10 @@ export default function MapScreen({ navigation }) {
                                 />
                                 <Callout
                                     tooltip
-                                    width={300}
+                                    width={310}
                                     backgroundColor="white"
                                     borderRadius = {30}
+                                    height = {250}
                                 >
                                     <CalloutSubview>
                                         <PopUp
@@ -534,6 +535,36 @@ export default function MapScreen({ navigation }) {
                                             </CalloutSubview>
                                         </View>
                                     </View>
+                                    <View style = {styles.showMore}>
+                                            <CalloutSubview
+                                                onPress={() => {
+                                                  //console.log("within mapscreen", parkName);
+                                                  // navigation.navigate(
+                                                  //     "Spotlight",
+                                                  //     {
+                                                  //         paramKey: item.name,
+                                                  //     }
+                                                  // );
+                                                  //console.log(parkName);
+                                              }}
+                                            >
+                                                <TouchableOpacity
+                                                    style={
+                                                        styles.showMoreContainer
+                                                    }
+
+                                                >
+                                                    <Text
+                                                        style={
+                                                            styles.showMoreBtnText
+                                                        }
+                                                        
+                                                    >
+                                                       <Ionicons name="eye"/> See More
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            </CalloutSubview>
+                                        </View>
                                 </Callout>
                             </Marker>
                         )
@@ -877,4 +908,21 @@ const styles = StyleSheet.create({
     mapTopComponent: {
         marginRight: 5,
     },
+    showMore:{
+      position: 'absolute',
+      marginLeft: 115,
+      paddingTop: 220,
+    },
+    showMoreBtnText:{
+      fontSize: 10,
+      color: "#fff",
+      alignSelf: "center",
+    },
+    showMoreContainer: {
+      backgroundColor: "#009688",
+      borderRadius: 10,
+      paddingVertical: 2,
+      paddingHorizontal: 2,
+      width: 80,
+  },
 });

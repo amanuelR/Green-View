@@ -15,24 +15,17 @@ import MapTopIcon from "../components/MapTopIcon";
 export default function ChatScreen({ route, navigation }) {
     const [messages, setMessages] = useState([]);
     const { user, userData } = useAuthentication();
-    const [isLoading, setIsLoading] = useState(true);
-    //   const routeParams = route.params;
-    //  console.log('navigation: ', routeParams)
-
-    //console.log('just route edit: ', route.params.paramKey)
-    //console.log('route edit: ', routeParams)
-
-    console.log("Park Name", route.params.paramKey.toString());
-    // let name = route.params.paramKey.toString()
+   
     useEffect(() => {
         let unsubscribeFromNewSnapshots = onSnapshot(
             doc(db, "chats", route.params.paramKey.toString()),
             (snapshot) => {
-                console.log(user, "New Snapshot! ", snapshot.data().messages);
-                setMessages(snapshot.data().messages);
-                setIsLoading(false);
-            }
-        );
+              let updatedMessage = snapshot.data().messages.map((message) => {
+                message.createdAt = message.createdAt.seconds * 1000;
+                return message;
+              });
+              setMessages(updatedMessage);
+            });
 
         return function cleanupBeforeUnmounting() {
             unsubscribeFromNewSnapshots();
@@ -51,14 +44,7 @@ export default function ChatScreen({ route, navigation }) {
         [route]
     );
 
-    const renderActions = () => {
-      return (<View style={{ flexDirection: 'row', paddingBottom: 0 }}>
-        <TouchableOpacity>
-          <Image source={require("/Users/amanuelreda/Desktop/GreenView/GreenView/assets/left-arroww.png")} style={{ width: 24, height: 24 }} />
-        </TouchableOpacity>
-      </View>);
-    };
-
+    
     // //const [userId, setUserID] = useState([]);
     if (user == null || userData == null) {
         return (
@@ -67,24 +53,21 @@ export default function ChatScreen({ route, navigation }) {
             </View>
         );
     }
-    // console.log("UserData", userData);
     return (
-      <View style={{ backgroundColor: '#fff', flex: 1, marginBottom: -35 }}>
           <GiftedChat
-            scrollToBottom
                     messages={messages}
                     onSend={(messages) => onSend(messages)}
                     user={{
                         // current "blue bubble" user
                         _id: userData._id,
                         name: userData.name,
+                        avatar: userData? userData.avatar: "../../assets/DaveIcon2.png",
                     }}
                     inverted={false}
                     showUserAvatar={true}
                     renderUsernameOnMessage={true}
-                    renderActions={renderActions}
+                    alwaysShowSend
                 />
-      </View>
     );
 }
 const styles = StyleSheet.create({
