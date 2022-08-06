@@ -257,86 +257,31 @@ export default function MapScreen({ navigation }) {
             name: "Bellevue Park",
             latitude: 34.08428677217567,
             longitude: -118.28281060285326,
-            eventSchedule: [
-                {
-                    parkName: "Mac Arthur Park",
-                    eventName: "Clean The Park",
-                    organizer: "Bellevue Youths",
-                },
-                {
-                    parkName: "Mac Arthur Park",
-                    eventName: "Clean The Park",
-                    organizer: "Bellevue Youths",
-                },
-            ],
+            events: "Trash Clean Up, Art Performance"
         },
         {
             name: "Echo Park Lake",
             latitude: 34.07306640467003,
             longitude: -118.2604952377022,
-            eventSchedule: [
-                {
-                    parkName: "Bellevue Park",
-                    eventName: "Clean The Park",
-                    organizer: "Bellevue Youths",
-                },
-                {
-                    parkName: "Bellevue Park",
-                    eventName: "Clean The Park",
-                    organizer: "Bellevue Youths",
-                },
-            ],
+            events: "Planting Tree, Free Drinks"
         },
         {
             name: "Elysian Park",
             latitude: 34.0845657476488,
             longitude: -118.23672858623276,
-            eventSchedule: [
-                {
-                    parkName: "Palisades Park",
-                    eventName: "Clean The Park",
-                    organizer: "Bellevue Youths",
-                },
-                {
-                    parkName: "Palisades Park",
-                    eventName: "Clean The Park",
-                    organizer: "Bellevue Youths",
-                },
-            ],
+            events: "Trash Clean Up, Free BBQ "
         },
         {
             name: "Mac Arthur Park",
             latitude: 34.05973407549204,
             longitude: -118.28316704628648,
-            eventSchedule: [
-                {
-                    parkName: "Tongva Park",
-                    eventName: "Clean The Park",
-                    organizer: "Bellevue Youths",
-                },
-                {
-                    parkName: "Tongva Park",
-                    eventName: "Clean The Park",
-                    organizer: "Bellevue Youths",
-                },
-            ],
+            events: "Tree Planting"
         },
         {
             name: "Visa Hermosa Park",
             latitude: 34.06207758901168,
             longitude: -118.25692881037423,
-            eventSchedule: [
-                {
-                    parkName: "Virginia Avenue Park",
-                    eventName: "Clean The Park",
-                    organizer: "Bellevue Youths",
-                },
-                {
-                    parkName: "Virginia Avenue Park",
-                    eventName: "Clean The Park",
-                    organizer: "Bellevue Youths",
-                },
-            ],
+            events: "Trash Clean Up"
         },
     ];
 
@@ -421,11 +366,10 @@ export default function MapScreen({ navigation }) {
                 />
                 <Marker
                     coordinate={locationA}
-                    image={{
-                        uri: "https://sdk.bitmoji.com/render/panel/f3af4143-e643-41dd-8d37-d6b376955106-131b9a04-44b1-4d1a-ae9e-912214e8f5e7-v1.png?transparent=1&palette=1",
-                    }}
                     key={2}
-                />
+                >
+                  <Image source = {require("../../assets/DaveStanding.png")}  style={{width: 100, height: 145}}/>
+                </Marker>
                 <Marker
                     coordinate={locationB}
                     image={{
@@ -436,7 +380,7 @@ export default function MapScreen({ navigation }) {
                 <Marker
                     coordinate={locationC}
                     image={{
-                        uri: "https://sdk.bitmoji.com/render/panel/8791767c-d526-45fd-8095-1ef7df540569-7388e222-0bc1-4d28-b3bc-f8e2afabffd1-v1.png?transparent=1&palette=1",
+                        uri: "https://sdk.bitmoji.com/render/panel/f3af4143-e643-41dd-8d37-d6b376955106-131b9a04-44b1-4d1a-ae9e-912214e8f5e7-v1.png?transparent=1&palette=1",
                     }}
                     key={4}
                 />
@@ -466,7 +410,7 @@ export default function MapScreen({ navigation }) {
                                     <CalloutSubview>
                                         <PopUp
                                             name={item.name}
-                                            description="Trash Clean Up"
+                                            description={item.events}
                                             imageUrl={require("/Users/amanuelreda/Desktop/GreenView/GreenView/assets/ChillaLogo.png")}
                                         />
                                     </CalloutSubview>
@@ -478,7 +422,7 @@ export default function MapScreen({ navigation }) {
                                             marginBottom: 10
                                         }}
                                     >
-                                        <View>
+                                        <View marginLeft = {-30}>
                                             <CalloutSubview
                                                 onPress={() => {
                                                     //console.log("within mapscreen", parkName);
@@ -506,7 +450,7 @@ export default function MapScreen({ navigation }) {
                                                 </TouchableOpacity>
                                             </CalloutSubview>
                                         </View>
-                                        <View>
+                                        <View marginLeft = {-45}>
                                             <CalloutSubview
                                                 onPress={() => {
                                                     //console.log("within mapscreen", parkName);
@@ -534,8 +478,7 @@ export default function MapScreen({ navigation }) {
                                                 </TouchableOpacity>
                                             </CalloutSubview>
                                         </View>
-                                    </View>
-                                    <View style = {styles.showMore}>
+                                        <View marginRight = {-30}>
                                             <CalloutSubview
                                                 onPress={() => {
                                                   //console.log("within mapscreen", parkName);
@@ -560,27 +503,26 @@ export default function MapScreen({ navigation }) {
                                                         }
                                                         
                                                     >
-                                                       <Ionicons name="eye"/> See More
+                                                       •••
                                                     </Text>
                                                 </TouchableOpacity>
                                             </CalloutSubview>
                                         </View>
+                                    </View>
                                 </Callout>
                             </Marker>
                         )
                 )}
                 {activeGreen && (
-                    <Circle
-                        center={currentRegion}
-                        radius={1500}
-                        fillColor={"rgba(200, 300, 200, 0.6)"}
-                        strokeColor="green"
-                        strokeWidth={3}
+                    <Circle 
+                        fillColor={'rgba(200, 300, 200, 0.6)'}
+                        center={locationA}
+                        radius={3000}
                     />
                 )}
             </MapView>
             <View style={styles.mapLayers}>
-                <View marginTop={3}>
+                <View marginTop={10}>
                     <TouchableOpacity
                         onPress={() => {
                             setActiveGreen(false);
@@ -618,6 +560,16 @@ export default function MapScreen({ navigation }) {
                         <Image
                             style={styles.smallest}
                             source={require("/Users/amanuelreda/Desktop/GreenView/GreenView/assets/ChillaLogo.png")}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <View marginLeft={5} marginTop={-45}>
+                    <TouchableOpacity
+                        style={styles.layerMapImage}
+                    >
+                        <Image
+                            style={styles.smallest}
+                            source={require("/Users/amanuelreda/Desktop/GreenView/GreenView/assets/downarroww.png")}
                         />
                     </TouchableOpacity>
                 </View>
@@ -680,13 +632,13 @@ export default function MapScreen({ navigation }) {
                 <View style={styles.places}>
                     <Image
                         style={styles.bitmojiImage}
-                        source={require("/Users/amanuelreda/Desktop/GreenView/GreenView/assets/parks.png")}
+                        source={require("../../assets/places.png")}
                     />
                     <View style={styles.bitmojiTextContainer}>
-                        <Text style={styles.bitmojiText}>Parks</Text>
+                        <Text style={styles.bitmojiText}>Places</Text>
                     </View>
                 </View>
-                <View style={styles.myFriends}>
+                <View style={styles.myBitmoji}>
                     <Image
                         style={styles.bitmojiImage}
                         source={{
@@ -877,7 +829,7 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(0, 0, 0, 0.175)",
         borderRadius: 22,
         width: 42,
-        height: 136,
+        height: 150,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -910,19 +862,19 @@ const styles = StyleSheet.create({
     },
     showMore:{
       position: 'absolute',
-      marginLeft: 115,
+      marginLeft: 140,
       paddingTop: 220,
     },
     showMoreBtnText:{
-      fontSize: 10,
+      fontSize: 20,
       color: "#fff",
-      alignSelf: "center",
+      marginLeft: 2
     },
     showMoreContainer: {
       backgroundColor: "#009688",
       borderRadius: 10,
-      paddingVertical: 2,
-      paddingHorizontal: 2,
-      width: 80,
+      width: 30,
+      height: 25
+
   },
 });

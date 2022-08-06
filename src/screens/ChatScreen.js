@@ -4,18 +4,20 @@ import React, {
     useEffect,
     useLayoutEffect,
 } from "react";
-import { GiftedChat, InputToolbar } from "react-native-gifted-chat";
-import { View, StyleSheet, TouchableOpacity, Text, Image} from "react-native";
+import { GiftedChat, InputToolbar, Send, Bubble } from "react-native-gifted-chat";
+import { View, StyleSheet, TouchableOpacity, Text, Image, ScrollView} from "react-native";
 import db from "../../firebase";
 import { updateDoc, arrayUnion, doc, onSnapshot } from "firebase/firestore";
 import { useAuthentication } from "../utils/hooks/useAuthentication";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { async } from "@firebase/util";
 //import firebase from "firebase/app";
 import MapTopIcon from "../components/MapTopIcon";
+import { render } from "react-dom";
 export default function ChatScreen({ route, navigation }) {
     const [messages, setMessages] = useState([]);
     const { user, userData } = useAuthentication();
-   
+    console.log("Chatscreen route => ", route);
     useEffect(() => {
         let unsubscribeFromNewSnapshots = onSnapshot(
             doc(db, "chats", route.params.paramKey.toString()),
@@ -44,7 +46,40 @@ export default function ChatScreen({ route, navigation }) {
         [route]
     );
 
-    
+    const renderSend = (props) => {
+      return (
+          <Send {...props}>
+              <View>
+                  <MaterialCommunityIcons
+                      name="send-circle"
+                      style={{ marginBottom: 5, marginRight: 5 }}
+                      size={32}
+                      color="green"
+                  />
+              </View>
+          </Send>
+      );
+  };
+  const renderBubble = (props) => {
+      return (
+          <Bubble
+              {...props}
+              wrapperStyle={{
+                  right: {
+                      backgroundColor: '#009900',
+                  },
+                  left: {
+                      backgroundColor: '#CCFFCC',
+                  },
+              }}
+              textStyle={{
+                  right: {
+                      color: '#fff',
+                  },
+              }}
+          />
+      );
+  };
     // //const [userId, setUserID] = useState([]);
     if (user == null || userData == null) {
         return (
@@ -53,6 +88,7 @@ export default function ChatScreen({ route, navigation }) {
             </View>
         );
     }
+    
     return (
           <GiftedChat
                     messages={messages}
@@ -61,12 +97,15 @@ export default function ChatScreen({ route, navigation }) {
                         // current "blue bubble" user
                         _id: userData._id,
                         name: userData.name,
-                        avatar: userData? userData.avatar: "../../assets/DaveIcon2.png",
+                        avatar: userData.avatar,
                     }}
                     inverted={false}
                     showUserAvatar={true}
                     renderUsernameOnMessage={true}
                     alwaysShowSend
+                    bottomOffset={110}
+                    renderBubble = {renderBubble}
+                    renderSend = {renderSend}
                 />
     );
 }
